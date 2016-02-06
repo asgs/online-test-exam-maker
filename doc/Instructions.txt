@@ -1,0 +1,24 @@
+This folder has all the dependent Jars that will be packaged as part of the application. You don't have to use these Jars as is.
+
+If you're using Apache Maven, you can ignore these Jars altogether and run the 'mvn -e clean install' command (assuming mvn is installed and available on the path).
+
+That should download all the dependencies to your local .m2 repository and package the final WAR file. The WAR file will now be available in the location online-test-exam-maker-war\target. Copy over this WAR file to the Tomcat/webapps directory.
+
+Before starting the tomcat instance, the following needs to be done as fas the Database goes.
+
+1. Assuming you have the MySQL DB installed and you have the right permissions to create/drop database and tables, we'll have to execute the ddl.sql and dml.sql (in the same order). These SQLs are found in the SQL folder of the final Zip file.
+2. Edit the context.xml file inside the Tomcat/conf directory. It should have the following piece of snippet.
+
+<Resource name="jdbc/onlineTestDB" auth="Container" type="javax.sql.DataSource"
+               maxTotal="100" maxIdle="30" maxWaitMillis="10000"
+               username="" password="" driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://localhost:3306/online_test_exam_maker"/>
+			   
+3. This snippet should be added anywhere directly under the Root Element <Context>. The username and password are left empty, so that you could edit it appropriately. These credentials are your DB user's.
+
+4. Once this is all done, run the startup.bat under Windows (or startup.sh under Unix) to start up the Tomcat instance.
+5. Once the application is up and running, type the following URL in the web browser http://<machine-name>:<port-number>/online-test-exam-maker-war/login.jsp
+6. The machine name is localhost if you're running in your local and the default port number is 8080 (unless it's modified).
+7. That's it. If everything went well, you should see the login screen as shown in the Demo video found in the Video folder. Please raise the volume of your computer if the voice is not that audible.
+
+Thanks for reading this! If you have any queries, please reach me at asgosa dot eeegct at gmail dot com
